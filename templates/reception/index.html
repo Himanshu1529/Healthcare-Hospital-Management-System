@@ -1,0 +1,54 @@
+{% extends 'reception/base.html' %} {% load static %} {% block content %}
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Home</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'doctor_home' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript: void(0)">Dashboard</a>
+              </li>
+              <li class="breadcrumb-item" aria-current="page">Home</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- [ sample-page ] start -->
+      <div class="col-md-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Users</h6>
+            <h4 class="mb-3">{{ total_users }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Patient</h6>
+            <h4 class="mb-3">{{ total_patients }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-4">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Pending Bills</h6>
+            <h4 class="mb-3">₹ {{ total_pending_bills }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

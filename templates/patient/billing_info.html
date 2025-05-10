@@ -1,0 +1,105 @@
+{% extends 'patient/base.html' %} {% load static %} {% block content %}
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Home</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'doctor_home' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript: void(0)">Dashboard</a>
+              </li>
+              <li class="breadcrumb-item" aria-current="page">Home</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %}
+    <div class="col-md-12 col-xl-12">
+      <h5 class="mb-3">Transaction History</h5>
+      <div class="card">
+        <div class="list-group list-group-flush">
+          {% for billing in billings %}
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <div
+                  class="avtar avtar-s rounded-circle {% if billing.payment_method == 'CASH' %} text-success bg-light-success {% elif billing.payment_method == 'CARD' %} text-primary bg-light-primary {% elif billing.payment_method == 'UPI' %} text-warning bg-light-warning {% else %} text-info bg-light-info {% endif %}"
+                >
+                  <i class="ti ti-currency-rupee f-18"></i>
+                </div>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h6 class="mb-1">Bill #{{ billing.id }}</h6>
+                <p class="mb-0 text-muted">
+                  {{ billing.bill_date|date:"d M, Y" }}
+                </p>
+              </div>
+              <div class="flex-shrink-0 text-end">
+                <h6 class="mb-1">₹{{ billing.paid_amount }}</h6>
+                <p class="mb-0 text-muted">{{ billing.payment_method }}</p>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-center text-muted">No transactions yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endcomment %}
+
+    <div class="container mt-5">
+      <h2 class="mb-4">Billing Information for {{ patient.name }}</h2>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5>Total Summary</h5>
+          <p><strong>Total Amount:</strong> ₹{{ total_amount }}</p>
+          <p><strong>Total Paid:</strong> ₹{{ total_paid }}</p>
+          <p><strong>Total Due:</strong> ₹{{ total_due }}</p>
+        </div>
+      </div>
+
+      <h4 class="mb-3">Detailed Transactions</h4>
+      <div class="card">
+        <div class="list-group list-group-flush">
+          {% for billing in billings %}
+          <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+              <div>
+                <h6 class="mb-1">Bill Date: {{ billing.bill_date }}</h6>
+                <p class="mb-0 text-muted">
+                  Payment Method: {{ billing.payment_method }}
+                </p>
+                <p class="mb-0 text-muted">
+                  Notes: {{ billing.billing_notes|default:'-' }}
+                </p>
+              </div>
+              <div class="text-end">
+                <h6 class="mb-1">Paid: ₹{{ billing.paid_amount }}</h6>
+                <p class="mb-0 text-muted">
+                  Balance: ₹{{ billing.balance_amount }}
+                </p>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="list-group-item text-center">
+            No billing history found.
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

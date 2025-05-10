@@ -1,0 +1,130 @@
+{% extends 'patient/base.html' %} {% load static %} {% block content %}
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Home</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'doctor_home' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="javascript: void(0)">Dashboard</a>
+              </li>
+              <li class="breadcrumb-item" aria-current="page">Home</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- [ sample-page ] start -->
+      <div class="col-md-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Billed Amount</h6>
+            <h4 class="mb-3">
+              ₹{{ total_billed }}
+              <span class="badge bg-light-primary border border-primary"
+                ><i class="ti ti-trending-up"></i> 59.3%</span
+              >
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+              You made an extra <span class="text-primary">35,000</span> this
+              year
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Discount Given:</h6>
+            <h4 class="mb-3">
+              ₹{{ total_discount }}
+              <span class="badge bg-light-success border border-success"
+                ><i class="ti ti-trending-up"></i> 70.5%</span
+              >
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+              You made an extra <span class="text-success">8,900</span> this
+              year
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Paid:</h6>
+            <h4 class="mb-3">
+              ₹{{ total_paid }}
+              <span class="badge bg-light-warning border border-warning"
+                ><i class="ti ti-trending-down"></i> 27.4%</span
+              >
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+              You made an extra <span class="text-warning">1,943</span> this
+              year
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3">
+        <div class="card">
+          <div class="card-body">
+            <h6 class="mb-2 f-w-400 text-muted">Total Due:</h6>
+            <h4 class="mb-3 {% if total_due > 0 %}due{% else %}paid{% endif %}">
+              ₹{{ total_due }}
+              <span class="badge bg-light-danger border border-danger"
+                ><i class="ti ti-trending-down"></i> 27.4%</span
+              >
+            </h4>
+            <p class="mb-0 text-muted text-sm">
+              You made an extra <span class="text-danger">$20,395</span> this
+              year
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-xl-12">
+      <h5 class="mb-3">Transaction History</h5>
+      <div class="card">
+        <div class="list-group list-group-flush">
+          {% for billing in billings %}
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <div
+                  class="avtar avtar-s rounded-circle {% if billing.payment_method == 'CASH' %} text-success bg-light-success {% elif billing.payment_method == 'CARD' %} text-primary bg-light-primary {% elif billing.payment_method == 'UPI' %} text-warning bg-light-warning {% else %} text-info bg-light-info {% endif %}"
+                >
+                  <i class="ti ti-currency-rupee f-18"></i>
+                </div>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h6 class="mb-1">Bill #{{ billing.id }}</h6>
+                <p class="mb-0 text-muted">
+                  {{ billing.bill_date|date:"d M, Y" }}
+                </p>
+              </div>
+              <div class="flex-shrink-0 text-end">
+                <h6 class="mb-1">₹{{ billing.paid_amount }}</h6>
+                <p class="mb-0 text-muted">{{ billing.payment_method }}</p>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <p class="text-center text-muted">No transactions yet.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
